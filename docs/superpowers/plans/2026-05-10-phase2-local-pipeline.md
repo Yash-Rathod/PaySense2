@@ -256,7 +256,7 @@ git commit -m "feat: Kafka KRaft + Kafka UI + DynamoDB Local + MLflow in docker-
 - Create: `producer/src/kafka_producer.py`
 - Create: `producer/tests/test_kafka_producer.py`
 
-- [ ] **Step 1: Write failing tests**
+- [x] **Step 1: Write failing tests**
 
 Create `producer/tests/test_kafka_producer.py`:
 
@@ -305,7 +305,7 @@ def test_kafka_producer_flush_on_close():
         mock_instance.flush.assert_called_once()
 ```
 
-- [ ] **Step 2: Run — verify FAIL**
+- [x] **Step 2: Run — verify FAIL**
 
 ```bash
 cd producer
@@ -314,7 +314,7 @@ python -m pytest tests/test_kafka_producer.py -v
 
 Expected: `ModuleNotFoundError: No module named 'producer.kafka_producer'`
 
-- [ ] **Step 3: Implement `producer/src/kafka_producer.py`**
+- [x] **Step 3: Implement `producer/src/kafka_producer.py`**
 
 ```python
 import json
@@ -352,7 +352,7 @@ class KafkaProducer:
             print(f"[kafka] delivery error: {err}")
 ```
 
-- [ ] **Step 4: Run tests — verify PASS**
+- [x] **Step 4: Run tests — verify PASS**
 
 ```bash
 python -m pytest tests/test_kafka_producer.py -v
@@ -360,7 +360,7 @@ python -m pytest tests/test_kafka_producer.py -v
 
 Expected: 3 passed
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add producer/src/kafka_producer.py producer/tests/test_kafka_producer.py
