@@ -18,6 +18,9 @@ dependencies = [
     "prometheus-client>=0.20",
 ]
 
+[project.scripts]
+consumer = "consumer.main:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
