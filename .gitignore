@@ -37,3 +37,5 @@ mlartifacts/
 *.iml
 
 ml/data/
+ml/mlflow.db
+ml/mlflow.db.bak

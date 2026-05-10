@@ -13,14 +13,16 @@ services:
   mlflow:
     image: python:3.12-slim
     command: >
-      sh -c "pip install mlflow==2.12.* && mlflow server
-        --backend-store-uri sqlite:///mlflow/mlflow.db
-        --default-artifact-root /mlflow/artifacts
-        --host 0.0.0.0 --port 5000"
+      sh -c "pip install --no-cache-dir 'setuptools<81' 'mlflow==3.12.*'
+      && mlflow server
+      --backend-store-uri sqlite:////ml/mlflow.db
+      --default-artifact-root /ml/mlruns
+      --host 0.0.0.0
+      --port 5000"
     ports:
       - "5000:5000"
     volumes:
-      - mlflow-data:/mlflow
+      - ./ml:/ml
 
 volumes:
   mlflow-data:
