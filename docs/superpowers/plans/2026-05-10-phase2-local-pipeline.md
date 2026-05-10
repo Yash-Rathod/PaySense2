@@ -41,7 +41,7 @@
 - Modify: `docker-compose.yml`
 - Create: `scripts/kafka-test.py`
 
-- [ ] **Step 1: Add Kafka + Kafka UI to `docker-compose.yml`**
+- [x] **Step 1: Add Kafka + Kafka UI to `docker-compose.yml`**
 
 Replace the existing skeleton content with:
 
@@ -177,7 +177,7 @@ volumes:
   mlflow-data:
 ```
 
-- [ ] **Step 2: Start Kafka and verify**
+- [x] **Step 2: Start Kafka and verify**
 
 ```bash
 docker compose up kafka kafka-init kafka-ui -d
@@ -186,11 +186,11 @@ docker compose logs kafka-init
 
 Expected: `Topics created.`
 
-- [ ] **Step 3: Verify Kafka UI**
+- [x] **Step 3: Verify Kafka UI**
 
 Open `http://localhost:8080` → verify `transactions` and `results` topics exist with 3 partitions each.
 
-- [ ] **Step 4: Create `scripts/kafka-test.py`**
+- [x] **Step 4: Create `scripts/kafka-test.py`**
 
 ```python
 """Smoke test: produce 5 messages, consume and print them."""
@@ -232,7 +232,7 @@ consumer.close()
 print(f"Done. Received {received}/5 messages.")
 ```
 
-- [ ] **Step 5: Run smoke test**
+- [x] **Step 5: Run smoke test**
 
 ```bash
 pip install confluent-kafka
@@ -241,7 +241,7 @@ python scripts/kafka-test.py
 
 Expected: `Received 5/5 messages.`
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add docker-compose.yml scripts/kafka-test.py
