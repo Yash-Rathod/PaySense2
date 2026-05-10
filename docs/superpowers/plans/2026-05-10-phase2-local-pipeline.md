@@ -375,7 +375,7 @@ git commit -m "feat: KafkaProducer class with delivery callback (ep06)"
 - Create: `producer/src/metrics.py`
 - Modify: `producer/src/cli.py`
 
-- [ ] **Step 1: Create `producer/src/metrics.py`**
+- [x] **Step 1: Create `producer/src/metrics.py`**
 
 ```python
 import threading
@@ -399,7 +399,7 @@ def start_metrics_server(port: int = 9090) -> None:
     ).start()
 ```
 
-- [ ] **Step 2: Update `producer/src/cli.py` to add `--mode` flag and Kafka integration**
+- [x] **Step 2: Update `producer/src/cli.py` to add `--mode` flag and Kafka integration**
 
 Full replacement of cli.py:
 
@@ -464,7 +464,7 @@ def main(rows: int, fraud_rate: float, tps: float, output: str, file_path: str, 
         kafka_producer.close()
 ```
 
-- [ ] **Step 3: Run existing tests — verify still pass**
+- [x] **Step 3: Run existing tests — verify still pass**
 
 ```bash
 cd producer
@@ -473,7 +473,7 @@ python -m pytest tests/ -v
 
 Expected: all tests pass
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add producer/src/metrics.py producer/src/cli.py
