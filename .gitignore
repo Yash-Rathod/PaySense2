@@ -35,3 +35,5 @@ mlartifacts/
 .idea/
 .vscode/
 *.iml
+
+ml/data/
