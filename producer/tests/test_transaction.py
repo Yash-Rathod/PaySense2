@@ -97,3 +97,28 @@ def test_fraud_rate_distribution():
     transactions = [generate_transaction(is_fraud=(i % 10 < 1)) for i in range(100)]
     fraud_count = sum(1 for t in transactions if t.is_fraud)
     assert fraud_count == 10
+
+
+from click.testing import CliRunner
+from producer.cli import main
+import json
+
+
+def test_cli_generates_rows():
+    runner = CliRunner()
+    result = runner.invoke(main, ["--rows", "5", "--fraud-rate", "0.0", "--output", "stdout"])
+    assert result.exit_code == 0
+    lines = [l for l in result.output.strip().split("\n") if l]
+    assert len(lines) == 5
+    for line in lines:
+        t = json.loads(line)
+        assert t["is_fraud"] is False
+
+
+def test_cli_fraud_rate():
+    runner = CliRunner()
+    result = runner.invoke(main, ["--rows", "100", "--fraud-rate", "1.0", "--output", "stdout"])
+    assert result.exit_code == 0
+    lines = [l for l in result.output.strip().split("\n") if l]
+    transactions = [json.loads(l) for l in lines]
+    assert all(t["is_fraud"] for t in transactions)
