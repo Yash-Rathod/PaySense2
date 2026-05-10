@@ -3,7 +3,8 @@ version: "3.9"
 services:
   producer:
     build: ./producer
-    profiles: ["app"]
+    image: paysense-producer:dev
+    command: ["--rows", "100", "--fraud-rate", "0.1", "--tps", "10"]
 
   consumer:
     build: ./consumer
