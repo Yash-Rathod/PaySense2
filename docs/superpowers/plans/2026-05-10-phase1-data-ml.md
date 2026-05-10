@@ -1088,7 +1088,7 @@ git commit -m "feat: MLflow model registration + Production stage promotion (ep0
 - Create: `consumer/src/model_loader.py`
 - Create: `consumer/tests/test_model_loader.py`
 
-- [ ] **Step 1: Write failing tests**
+- [x] **Step 1: Write failing tests**
 
 Create `consumer/tests/test_model_loader.py`:
 
@@ -1141,7 +1141,7 @@ def test_model_loader_loads_and_predicts(tmp_path, monkeypatch):
     assert 0.0 <= confidence <= 1.0
 ```
 
-- [ ] **Step 2: Run — verify FAIL**
+- [x] **Step 2: Run — verify FAIL**
 
 ```bash
 cd consumer
@@ -1151,7 +1151,7 @@ python -m pytest tests/test_model_loader.py -v
 
 Expected: `ModuleNotFoundError: No module named 'consumer.model_loader'`
 
-- [ ] **Step 3: Implement `consumer/src/model_loader.py`**
+- [x] **Step 3: Implement `consumer/src/model_loader.py`**
 
 ```python
 import os
@@ -1180,7 +1180,7 @@ class ModelLoader:
         return label, round(confidence, 4)
 ```
 
-- [ ] **Step 4: Run tests — verify PASS**
+- [x] **Step 4: Run tests — verify PASS**
 
 ```bash
 python -m pytest tests/test_model_loader.py -v
@@ -1188,7 +1188,7 @@ python -m pytest tests/test_model_loader.py -v
 
 Expected: 2 passed
 
-- [ ] **Step 5: Smoke test with real MLflow registry**
+- [x] **Step 5: Smoke test with real MLflow registry**
 
 ```bash
 MODEL_URI="models:/paysense-fraud-detector/Production" \
@@ -1204,7 +1204,7 @@ print(f'is_fraud={label}, confidence={confidence}')
 
 Expected: prints `is_fraud=True/False, confidence=0.XXXX`
 
-- [ ] **Step 6: Document `MODEL_URI` pattern**
+- [x] **Step 6: Document `MODEL_URI` pattern**
 
 Append to `README.md`:
 
@@ -1220,7 +1220,7 @@ Set `MLFLOW_TRACKING_URI=http://localhost:5000` for local.
 Set `MLFLOW_TRACKING_URI=sqlite:///mlflow.db` for embedded.
 ```
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add consumer/src/model_loader.py consumer/tests/test_model_loader.py README.md

@@ -44,3 +44,13 @@ docker run paysense-producer --rows 1000 --fraud-rate 0.1 --tps 50
 # Full local stack
 docker compose up
 ```
+
+## MODEL_URI Pattern
+
+| Phase | MODEL_URI value |
+|-------|-----------------|
+| Ep 04-08 (local) | `models:/paysense-fraud-detector/Production` (local MLflow) |
+| Ep 09+ (AWS) | `s3://paysense-mlflow-artifacts/<run-id>/artifacts/model` |
+
+Set `MLFLOW_TRACKING_URI=http://localhost:5000` for local.
+Set `MLFLOW_TRACKING_URI=sqlite:///mlflow.db` for embedded.
