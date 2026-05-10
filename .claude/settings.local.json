@@ -3,7 +3,15 @@
     "allow": [
       "Bash(git init *)",
       "PowerShell(Start-Sleep -Seconds 3; $stateFile = Get-ChildItem \"C:\\\\Users\\\\yashr\\\\PaySense2\\\\.superpowers\\\\brainstorm\" -Recurse -Filter \"server-info\" -ErrorAction SilentlyContinue | Select-Object -First 1; if \\($stateFile\\) { Get-Content $stateFile.FullName } else { \"not ready yet\" })",
-      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\Users\\\\yashr\\\\PaySense2\\\\docs\\\\superpowers\\\\plans\" -Force)"
+      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\Users\\\\yashr\\\\PaySense2\\\\docs\\\\superpowers\\\\plans\" -Force)",
+      "Bash(cat)",
+      "Bash(python /tmp/check_entrypoints.py)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(Get-ChildItem -Path producer -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "Bash(python -m pytest tests/test_transaction.py -v)",
+      "Bash(pip install *)"
     ]
   }
 }

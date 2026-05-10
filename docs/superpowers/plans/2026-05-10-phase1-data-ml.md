@@ -838,14 +838,18 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
         le = LabelEncoder()
         df[f"{col}_enc"] = le.fit_transform(df[col].astype(str))
 
-    return df
+    # Log encoding maps so consumer can reproduce identical encodings at inference time
+    _amount_mean = float(df["amount"].mean())
+    _amount_std = float(df["amount"].std())
+
+    return df, _amount_mean, _amount_std
 
 
 def train(data_path: str, params: dict) -> None:
     mlflow.set_experiment("paysense-fraud-detector")
 
     df = load_data(data_path)
-    df = engineer_features(df)
+    df, amount_mean, amount_std = engineer_features(df)
 
     X = df[FEATURE_COLS].values
     y = df["is_fraud"].astype(int).values
@@ -883,9 +887,24 @@ def train(data_path: str, params: dict) -> None:
             "auc_roc": roc_auc_score(y_test, y_prob),
         }
         mlflow.log_metrics(metrics)
+        # Log normalization stats so consumer can reproduce identical amount_zscore at inference
+        mlflow.log_params({"amount_mean": amount_mean, "amount_std": amount_std})
 
         feature_importance = dict(zip(FEATURE_COLS, model.feature_importances_.tolist()))
         mlflow.log_dict(feature_importance, "feature_importance.json")
+
+        # Log LabelEncoder category order so consumer uses identical integer mapping
+        # LabelEncoder sorts alphabetically — document canonical orders here
+        # currency: CAD=0, EUR=1, GBP=2, USD=3
+        # merchant_category: crypto=0, e-commerce=1, electronics=2, gambling=3, grocery=4, healthcare=5, luxury=6, restaurant=7, retail=8, transport=9, wire-transfer=10
+        # card_type: Amex=0, Discover=1, Mastercard=2, Visa=3
+        # merchant_country: AU=0, BR=1, CA=2, DE=3, GB=4, NG=5, PK=6, RO=7, UA=8, US=9
+        mlflow.log_dict({
+            "currency": {"CAD": 0, "EUR": 1, "GBP": 2, "USD": 3},
+            "merchant_category": {"crypto": 0, "e-commerce": 1, "electronics": 2, "gambling": 3, "grocery": 4, "healthcare": 5, "luxury": 6, "restaurant": 7, "retail": 8, "transport": 9, "wire-transfer": 10},
+            "card_type": {"Amex": 0, "Discover": 1, "Mastercard": 2, "Visa": 3},
+            "merchant_country": {"AU": 0, "BR": 1, "CA": 2, "DE": 3, "GB": 4, "NG": 5, "PK": 6, "RO": 7, "UA": 8, "US": 9},
+        }, "encoding_maps.json")
 
         mlflow.sklearn.log_model(model, "model")
 
@@ -1150,17 +1169,12 @@ class ModelLoader:
         if tracking_uri:
             mlflow.set_tracking_uri(tracking_uri)
 
-        self._model = mlflow.pyfunc.load_model(model_uri)
+        # Load as sklearn model so predict_proba is available (mlflow.sklearn.log_model was used in training)
+        self._model = mlflow.sklearn.load_model(model_uri)
 
     def predict(self, features: list[float]) -> tuple[bool, float]:
         x = np.array([features])
-        proba = self._model.predict(x)
-        # pyfunc returns raw label or proba depending on model flavor
-        if hasattr(proba, "__len__") and len(proba) == 1:
-            prob_fraud = float(proba[0])
-        else:
-            prob_fraud = float(proba)
-
+        prob_fraud = float(self._model.predict_proba(x)[0, 1])
         label = prob_fraud >= 0.5
         confidence = prob_fraud if label else 1.0 - prob_fraud
         return label, round(confidence, 4)
@@ -1200,7 +1214,7 @@ Append to `README.md`:
 | Phase | MODEL_URI value |
 |-------|----------------|
 | Ep 04–08 (local) | `models:/paysense-fraud-detector/Production` (local MLflow) |
-| Ep 09+ (AWS) | `s3://paysense-artifacts/mlflow/<run-id>/artifacts/model` |
+| Ep 09+ (AWS) | `s3://paysense-mlflow-artifacts/<run-id>/artifacts/model` |
 
 Set `MLFLOW_TRACKING_URI=http://localhost:5000` for local.
 Set `MLFLOW_TRACKING_URI=sqlite:///mlflow.db` for embedded.
