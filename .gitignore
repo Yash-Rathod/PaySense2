@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+*.egg
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Docker
+.docker/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Superpowers
+.superpowers/
+
+# IDE
+.idea/
+.vscode/
+*.iml

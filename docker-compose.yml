@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  producer:
+    build: ./producer
+    profiles: ["app"]
+
+  consumer:
+    build: ./consumer
+    profiles: ["app"]

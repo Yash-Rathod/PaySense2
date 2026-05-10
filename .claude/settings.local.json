@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init *)",
+      "PowerShell(Start-Sleep -Seconds 3; $stateFile = Get-ChildItem \"C:\\\\Users\\\\yashr\\\\PaySense2\\\\.superpowers\\\\brainstorm\" -Recurse -Filter \"server-info\" -ErrorAction SilentlyContinue | Select-Object -First 1; if \\($stateFile\\) { Get-Content $stateFile.FullName } else { \"not ready yet\" })",
+      "PowerShell(New-Item -ItemType Directory -Path \"C:\\\\Users\\\\yashr\\\\PaySense2\\\\docs\\\\superpowers\\\\plans\" -Force)"
+    ]
+  }
+}

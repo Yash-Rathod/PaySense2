@@ -1,0 +1,7 @@
+scikit-learn>=1.4
+xgboost>=2.0
+mlflow>=2.12
+pandas>=2.2
+imbalanced-learn>=0.12
+faker>=24.0
+pydantic>=2.6
