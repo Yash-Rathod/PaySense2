@@ -66,3 +66,34 @@ def test_transaction_serializes_to_json():
     data = t.model_dump_json()
     assert "transaction_id" in data
     assert "is_fraud" in data
+
+
+from producer.generator import generate_transaction
+
+
+def test_generate_legit_transaction():
+    t = generate_transaction(is_fraud=False)
+    assert t.is_fraud is False
+    assert t.amount > 0
+    assert t.currency in ("USD", "EUR", "GBP", "CAD")
+    assert len(t.card_last4) == 4
+
+
+def test_generate_fraud_transaction():
+    t = generate_transaction(is_fraud=True)
+    assert t.is_fraud is True
+    # Fraud transactions lean high-amount or international
+    assert t.amount > 0
+
+
+def test_generate_transaction_has_valid_uuid_fields():
+    import uuid
+    t = generate_transaction(is_fraud=False)
+    uuid.UUID(t.transaction_id)
+    uuid.UUID(t.customer_id)
+
+
+def test_fraud_rate_distribution():
+    transactions = [generate_transaction(is_fraud=(i % 10 < 1)) for i in range(100)]
+    fraud_count = sum(1 for t in transactions if t.is_fraud)
+    assert fraud_count == 10
