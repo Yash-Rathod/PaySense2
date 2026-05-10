@@ -999,7 +999,7 @@ git commit -m "feat: XGBoost training script with MLflow tracking + SMOTE (ep03)
 **Files:**
 - Create: `ml/register_model.py`
 
-- [ ] **Step 1: Create `ml/register_model.py`**
+- [x] **Step 1: Create `ml/register_model.py`**
 
 ```python
 """Register the best MLflow run to the Model Registry and promote to Production."""
@@ -1053,7 +1053,7 @@ if __name__ == "__main__":
     register_best_model(args.experiment, args.metric)
 ```
 
-- [ ] **Step 2: Register best model**
+- [x] **Step 2: Register best model**
 
 ```bash
 cd ml
@@ -1069,11 +1069,11 @@ Registered version 1 → Production
 Load URI: models:/paysense-fraud-detector/Production
 ```
 
-- [ ] **Step 3: Verify in MLflow UI**
+- [x] **Step 3: Verify in MLflow UI**
 
 Open `http://localhost:5000` → Models → `paysense-fraud-detector` → Version 1 should show `Production` stage.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add ml/register_model.py
