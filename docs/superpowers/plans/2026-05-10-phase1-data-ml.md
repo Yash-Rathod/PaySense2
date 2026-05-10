@@ -1231,7 +1231,7 @@ git commit -m "feat: consumer model loader reads MODEL_URI env var, supports loc
 
 ## Phase 1 Complete Verification
 
-- [ ] **Run all tests**
+- [x] **Run all tests**
 
 ```bash
 cd producer && python -m pytest tests/ -v
@@ -1240,7 +1240,7 @@ cd ../consumer && python -m pytest tests/ -v
 
 Expected: All green.
 
-- [ ] **Full CLI smoke test**
+- [x] **Full CLI smoke test**
 
 ```bash
 cd producer
@@ -1253,20 +1253,20 @@ for l in lines:
 "
 ```
 
-- [ ] **Docker image smoke test**
+- [x] **Docker image smoke test**
 
 ```bash
 docker build -t paysense-producer:dev producer/
 docker run --rm paysense-producer:dev --rows 5 --fraud-rate 0.5
 ```
 
-- [ ] **MLflow UI verification**
+- [x] **MLflow UI verification**
 
 Open `http://localhost:5000`:
 - Experiment `paysense-fraud-detector` shows ≥2 runs
 - Model Registry shows `paysense-fraud-detector` version 1 in `Production`
 
-- [ ] **Final commit and tag**
+- [x] **Final commit and tag**
 
 ```bash
 git add .
