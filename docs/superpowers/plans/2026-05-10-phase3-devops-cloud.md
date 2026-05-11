@@ -173,7 +173,7 @@ git commit -m "feat: Terraform VPC module (2 AZs, NAT gateway) (ep09)"
 - Create: `infra/terraform/modules/eks/variables.tf`
 - Create: `infra/terraform/modules/eks/outputs.tf`
 
-- [ ] **Step 1: Create `infra/terraform/modules/eks/variables.tf`**
+- [x] **Step 1: Create `infra/terraform/modules/eks/variables.tf`**
 
 ```hcl
 variable "cluster_name" { type = string }
@@ -183,7 +183,7 @@ variable "subnet_ids" { type = list(string) }
 variable "node_count" { type = number; default = 3 }
 ```
 
-- [ ] **Step 2: Create `infra/terraform/modules/eks/main.tf`**
+- [x] **Step 2: Create `infra/terraform/modules/eks/main.tf`**
 
 ```hcl
 module "eks" {
@@ -213,7 +213,7 @@ module "eks" {
 }
 ```
 
-- [ ] **Step 3: Create `infra/terraform/modules/eks/outputs.tf`**
+- [x] **Step 3: Create `infra/terraform/modules/eks/outputs.tf`**
 
 ```hcl
 output "cluster_name" {
@@ -233,7 +233,7 @@ output "oidc_provider" {
 }
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add infra/terraform/modules/eks/
@@ -249,7 +249,7 @@ git commit -m "feat: Terraform EKS module (3x t3.small) (ep09)"
 - Create: `infra/terraform/modules/irsa/variables.tf`
 - Create: `infra/terraform/modules/irsa/outputs.tf`
 
-- [ ] **Step 1: Create `infra/terraform/modules/irsa/variables.tf`**
+- [x] **Step 1: Create `infra/terraform/modules/irsa/variables.tf`**
 
 ```hcl
 variable "cluster_name" { type = string }
@@ -260,7 +260,7 @@ variable "s3_bucket_arn" { type = string }
 variable "namespace" { type = string; default = "paysense" }
 ```
 
-- [ ] **Step 2: Create `infra/terraform/modules/irsa/main.tf`**
+- [x] **Step 2: Create `infra/terraform/modules/irsa/main.tf`**
 
 ```hcl
 data "aws_iam_policy_document" "paysense_assume_role" {
@@ -306,7 +306,7 @@ resource "aws_iam_role_policy" "paysense" {
 }
 ```
 
-- [ ] **Step 3: Create `infra/terraform/modules/irsa/outputs.tf`**
+- [x] **Step 3: Create `infra/terraform/modules/irsa/outputs.tf`**
 
 ```hcl
 output "role_arn" {
@@ -314,7 +314,7 @@ output "role_arn" {
 }
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add infra/terraform/modules/irsa/
