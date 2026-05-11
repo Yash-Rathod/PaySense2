@@ -733,7 +733,7 @@ git commit -m "feat: Helm chart for consumer (Deployment, SA with IRSA, Service,
 - Create: `infra/helm/strimzi/kafka-cluster.yaml`
 - Create: `infra/helm/strimzi/kafka-topics.yaml`
 
-- [ ] **Step 1: Create `infra/helm/strimzi/kafka-cluster.yaml`**
+- [x] **Step 1: Create `infra/helm/strimzi/kafka-cluster.yaml`**
 
 ```yaml
 apiVersion: kafka.strimzi.io/v1beta2
@@ -780,7 +780,7 @@ spec:
     topicOperator: {}
 ```
 
-- [ ] **Step 2: Create `infra/helm/strimzi/kafka-topics.yaml`**
+- [x] **Step 2: Create `infra/helm/strimzi/kafka-topics.yaml`**
 
 ```yaml
 apiVersion: kafka.strimzi.io/v1beta2
@@ -810,7 +810,7 @@ spec:
     retention.ms: 86400000
 ```
 
-- [ ] **Step 3: Validate YAML syntax**
+- [x] **Step 3: Validate YAML syntax**
 
 ```bash
 python -c "import yaml; yaml.safe_load_all(open('infra/helm/strimzi/kafka-cluster.yaml'))"
@@ -819,7 +819,7 @@ python -c "import yaml; yaml.safe_load_all(open('infra/helm/strimzi/kafka-topics
 
 Expected: no errors
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add infra/helm/strimzi/
