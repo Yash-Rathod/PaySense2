@@ -934,7 +934,7 @@ git commit -m "feat: ArgoCD Application manifests for producer, consumer, Kafka 
 **Files:**
 - Create: `.github/workflows/ci-producer.yml`
 
-- [ ] **Step 1: Create `.github/workflows/ci-producer.yml`**
+- [x] **Step 1: Create `.github/workflows/ci-producer.yml`**
 
 ```yaml
 name: CI — Producer
@@ -1002,7 +1002,7 @@ jobs:
           git push
 ```
 
-- [ ] **Step 2: Commit**
+- [x] **Step 2: Commit**
 
 ```bash
 git add .github/workflows/ci-producer.yml
