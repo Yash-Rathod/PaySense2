@@ -1,6 +1,6 @@
 image:
-  repository: "PLACEHOLDER_ECR_URL/paysense-producer"
-  tag: "latest"
+  repository: "347486023960.dkr.ecr.us-east-1.amazonaws.com/paysense-producer"
+  tag: "3bdea35bcd923cf745d3f68350fd9dfc52f30d4e"
   pullPolicy: IfNotPresent
 
 replicaCount: 1
