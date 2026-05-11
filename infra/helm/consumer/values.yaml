@@ -1,0 +1,34 @@
+image:
+  repository: "PLACEHOLDER_ECR_URL/paysense-consumer"
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+env:
+  KAFKA_BOOTSTRAP_SERVERS: "kafka-cluster-kafka-bootstrap.paysense.svc.cluster.local:9092"
+  KAFKA_TOPIC_TRANSACTIONS: "transactions"
+  KAFKA_TOPIC_RESULTS: "results"
+  KAFKA_GROUP_ID: "paysense-consumer"
+  DYNAMODB_TABLE: "transactions"
+  AWS_DEFAULT_REGION: "us-east-1"
+  # Set to direct S3 path after terraform apply + model upload step (ep09 manual step 3)
+  # Format: s3://paysense-mlflow-artifacts/<run-id>/artifacts/model
+  # Do NOT use models:/ registry alias here — no MLflow tracking server runs on EKS
+  MODEL_URI: "PLACEHOLDER_S3_MODEL_URI"
+  API_PORT: "8001"
+  METRICS_PORT: "9091"
+
+resources:
+  requests:
+    cpu: 256m
+    memory: 256Mi
+  limits:
+    cpu: 512m
+    memory: 512Mi
+
+serviceAccount:
+  irsaRoleArn: ""
+
+apiPort: 8001
+metricsPort: 9091

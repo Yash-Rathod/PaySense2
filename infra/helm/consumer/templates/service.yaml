@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: consumer
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: consumer
+  ports:
+    - name: api
+      port: {{ .Values.apiPort }}
+      targetPort: {{ .Values.apiPort }}
+    - name: metrics
+      port: {{ .Values.metricsPort }}
+      targetPort: {{ .Values.metricsPort }}
