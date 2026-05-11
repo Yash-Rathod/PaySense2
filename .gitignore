@@ -39,3 +39,5 @@ mlartifacts/
 ml/data/
 ml/mlflow.db
 ml/mlflow.db.bak
+.claude/settings.local.json
+.claude/settings.local.json

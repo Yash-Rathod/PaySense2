@@ -11,7 +11,8 @@
       "Bash(Get-ChildItem -Path producer -Recurse -Force)",
       "Bash(Select-Object FullName)",
       "Bash(python -m pytest tests/test_transaction.py -v)",
-      "Bash(pip install *)"
+      "Bash(pip install *)",
+      "Bash(docker compose *)"
     ]
   }
 }
