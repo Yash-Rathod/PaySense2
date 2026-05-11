@@ -1016,7 +1016,7 @@ git commit -m "feat: GitHub Actions CI/CD for producer (OIDC → ECR → Helm va
 **Files:**
 - Create: `.github/workflows/ci-consumer.yml`
 
-- [ ] **Step 1: Create `.github/workflows/ci-consumer.yml`**
+- [x] **Step 1: Create `.github/workflows/ci-consumer.yml`**
 
 ```yaml
 name: CI — Consumer
@@ -1084,18 +1084,18 @@ jobs:
           git push
 ```
 
-- [ ] **Step 2: Add workflow status badges to README.md**
+- [x] **Step 2: Add workflow status badges to README.md**
 
 Append to `README.md`:
 
 ```markdown
 ## CI Status
 
-![Producer CI](https://github.com/PLACEHOLDER_GITHUB_USER/PaySense2/actions/workflows/ci-producer.yml/badge.svg)
-![Consumer CI](https://github.com/PLACEHOLDER_GITHUB_USER/PaySense2/actions/workflows/ci-consumer.yml/badge.svg)
+![Producer CI](https://github.com/Yash-Rathod/PaySense2/actions/workflows/ci-producer.yml/badge.svg)
+![Consumer CI](https://github.com/Yash-Rathod/PaySense2/actions/workflows/ci-consumer.yml/badge.svg)
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add .github/workflows/ci-consumer.yml README.md
