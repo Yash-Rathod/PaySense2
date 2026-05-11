@@ -93,7 +93,7 @@ Expected: bucket accessible, table status `"ACTIVE"`
 - Create: `infra/terraform/modules/vpc/variables.tf`
 - Create: `infra/terraform/modules/vpc/outputs.tf`
 
-- [ ] **Step 1: Create `infra/terraform/modules/vpc/variables.tf`**
+- [x] **Step 1: Create `infra/terraform/modules/vpc/variables.tf`**
 
 ```hcl
 variable "cluster_name" {
@@ -106,7 +106,7 @@ variable "region" {
 }
 ```
 
-- [ ] **Step 2: Create `infra/terraform/modules/vpc/main.tf`**
+- [x] **Step 2: Create `infra/terraform/modules/vpc/main.tf`**
 
 ```hcl
 module "vpc" {
@@ -141,7 +141,7 @@ module "vpc" {
 }
 ```
 
-- [ ] **Step 3: Create `infra/terraform/modules/vpc/outputs.tf`**
+- [x] **Step 3: Create `infra/terraform/modules/vpc/outputs.tf`**
 
 ```hcl
 output "vpc_id" {
@@ -157,7 +157,7 @@ output "public_subnet_ids" {
 }
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add infra/terraform/modules/vpc/
