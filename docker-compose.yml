@@ -97,6 +97,8 @@ services:
       KAFKA_TOPIC_TRANSACTIONS: transactions
     # NOTE: --mode kafka is added to cli.py in Task 3. This service works after Task 3 is complete.
     command: ["--rows", "100", "--fraud-rate", "0.1", "--tps", "10", "--mode", "kafka"]
+    ports:
+      - "9090:9090"
     profiles: ["app"]
 
   consumer:
@@ -125,4 +127,5 @@ services:
       - ./ml:/ml
     ports:
       - "8001:8001"
+      - "9091:9091"
     profiles: ["app"]
