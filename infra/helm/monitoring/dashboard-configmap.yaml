@@ -1,0 +1,169 @@
+apiVersion: v1
+data:
+  paysense-overview.json: |
+    {
+      "__inputs": [],
+      "__requires": [],
+      "annotations": { "list": [] },
+      "description": "PaySense fraud detection pipeline overview",
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 1,
+      "id": null,
+      "links": [],
+      "panels": [
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": { "color": { "mode": "palette-classic" }, "unit": "reqps" },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+          "id": 1,
+          "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list" }, "tooltip": { "mode": "single" } },
+          "targets": [
+            {
+              "expr": "rate(transactions_produced_total[1m])",
+              "legendFormat": "TPS",
+              "refId": "A"
+            }
+          ],
+          "title": "Transactions Per Second",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": { "color": { "mode": "thresholds" }, "unit": "percentunit",
+              "thresholds": { "mode": "absolute", "steps": [
+                { "color": "green", "value": null },
+                { "color": "orange", "value": 0.1 },
+                { "color": "red", "value": 0.2 }
+              ]}
+            },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+          "id": 2,
+          "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "orientation": "auto", "textMode": "auto", "colorMode": "background" },
+          "targets": [
+            {
+              "expr": "rate(fraud_detected_total[5m]) / rate(transactions_consumed_total[5m])",
+              "legendFormat": "Fraud Rate",
+              "refId": "A"
+            }
+          ],
+          "title": "Fraud Detection Rate",
+          "type": "stat"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": {
+            "defaults": { "unit": "s" },
+            "overrides": []
+          },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+          "id": 3,
+          "options": { "legend": { "calcs": ["mean"], "displayMode": "list" } },
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.50, rate(classification_latency_seconds_bucket[5m]))",
+              "legendFormat": "p50",
+              "refId": "A"
+            },
+            {
+              "expr": "histogram_quantile(0.95, rate(classification_latency_seconds_bucket[5m]))",
+              "legendFormat": "p95",
+              "refId": "B"
+            },
+            {
+              "expr": "histogram_quantile(0.99, rate(classification_latency_seconds_bucket[5m]))",
+              "legendFormat": "p99",
+              "refId": "C"
+            }
+          ],
+          "title": "Classification Latency (p50 / p95 / p99)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+          "id": 4,
+          "options": { "legend": { "calcs": ["max"], "displayMode": "list" } },
+          "targets": [
+            {
+              "expr": "kafka_consumergroup_lag",
+              "legendFormat": "Consumer Lag — {{topic}}",
+              "refId": "A"
+            }
+          ],
+          "title": "Kafka Consumer Lag",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+          "id": 5,
+          "options": { "legend": { "calcs": ["sum"], "displayMode": "list" } },
+          "targets": [
+            {
+              "expr": "increase(transactions_consumed_total[1m])",
+              "legendFormat": "DynamoDB Writes/min",
+              "refId": "A"
+            }
+          ],
+          "title": "DynamoDB Write Count",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": { "defaults": { "unit": "percentunit" }, "overrides": [] },
+          "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+          "id": 6,
+          "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list" } },
+          "targets": [
+            {
+              "expr": "rate(container_cpu_usage_seconds_total{namespace=\"paysense\"}[1m])",
+              "legendFormat": "{{pod}} CPU",
+              "refId": "A"
+            }
+          ],
+          "title": "Pod CPU Usage",
+          "type": "timeseries"
+        },
+        {
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "fieldConfig": { "defaults": { "unit": "bytes" }, "overrides": [] },
+          "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+          "id": 7,
+          "options": { "legend": { "calcs": ["mean", "max"], "displayMode": "list" } },
+          "targets": [
+            {
+              "expr": "container_memory_working_set_bytes{namespace=\"paysense\", container!=\"\"}",
+              "legendFormat": "{{pod}} memory",
+              "refId": "A"
+            }
+          ],
+          "title": "Pod Memory Usage",
+          "type": "timeseries"
+        }
+      ],
+      "refresh": "10s",
+      "schemaVersion": 39,
+      "tags": ["paysense", "fraud-detection"],
+      "templating": { "list": [] },
+      "time": { "from": "now-30m", "to": "now" },
+      "timepicker": {},
+      "timezone": "browser",
+      "title": "PaySense Overview",
+      "uid": "paysense-overview",
+      "version": 1
+    }
+kind: ConfigMap
+metadata:
+  labels:
+    grafana_dashboard: "1"
+  name: paysense-grafana-dashboard
+  namespace: paysense
