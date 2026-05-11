@@ -1,0 +1,63 @@
+name: CI — Producer
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "producer/**"
+      - ".github/workflows/ci-producer.yml"
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  test-build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install and test
+        working-directory: producer
+        run: |
+          pip install -e ".[dev]" 2>/dev/null || pip install -e . pytest
+          pip install faker click pydantic prometheus-client pytest
+          python -m pytest tests/ -v
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Login to ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push
+        env:
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/paysense-producer:$IMAGE_TAG producer/
+          docker push $ECR_REGISTRY/paysense-producer:$IMAGE_TAG
+
+      - name: Update Helm values image tag
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+        run: |
+          sed -i "s|tag: .*|tag: \"$IMAGE_TAG\"|" infra/helm/producer/values.yaml
+          sed -i "s|repository: .*|repository: \"$ECR_REGISTRY/paysense-producer\"|" infra/helm/producer/values.yaml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add infra/helm/producer/values.yaml
+          git commit -m "ci: update producer image tag to $IMAGE_TAG [skip ci]" || echo "No changes"
+          git push
