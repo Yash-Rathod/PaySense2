@@ -28,10 +28,12 @@ def run_consumer_loop(stop_event=None) -> None:
     topic = os.environ.get("KAFKA_TOPIC_TRANSACTIONS", "transactions")
     consumer.subscribe([topic])
 
+    print(f"[info] starting consumer loop for topic {topic} on {os.environ.get('KAFKA_BOOTSTRAP_SERVERS')}", flush=True)
     try:
         while stop_event is None or not stop_event.is_set():
             msg = consumer.poll(1.0)
             if msg is None:
+                # print("[debug] poll timeout", flush=True)
                 continue
             if msg.error():
                 if msg.error().code() != KafkaError._PARTITION_EOF:
@@ -71,6 +73,7 @@ def run_consumer_loop(stop_event=None) -> None:
                     transactions_consumed.inc()
                     if is_fraud:
                         fraud_detected.inc()
+                    print(f"[info] processed transaction {t['transaction_id']} | is_fraud={is_fraud} | latency={latency_ms}ms", flush=True)
             except Exception as exc:
                 print(f"[kafka] error processing msg: {exc}")
 

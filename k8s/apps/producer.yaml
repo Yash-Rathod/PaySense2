@@ -9,6 +9,12 @@ spec:
     repoURL: https://github.com/Yash-Rathod/PaySense2.git
     targetRevision: HEAD
     path: infra/helm/producer
+    helm:
+      parameters:
+        - name: "image.repository"
+          value: "347486023960.dkr.ecr.us-east-1.amazonaws.com/paysense-producer"
+        - name: "serviceAccount.irsaRoleArn"
+          value: "arn:aws:iam::347486023960:role/paysense-eks-paysense-role"
   destination:
     server: https://kubernetes.default.svc
     namespace: paysense

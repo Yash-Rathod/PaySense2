@@ -36,6 +36,7 @@ def main(
 
         bootstrap = os.environ.get("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
         topic = os.environ.get("KAFKA_TOPIC_TRANSACTIONS", "transactions")
+        print(f"[info] starting kafka producer on {bootstrap} topic {topic}", flush=True)
         kafka_producer = KafkaProducer(bootstrap_servers=bootstrap, topic=topic)
         start_metrics_server(metrics_port)
 
@@ -59,10 +60,14 @@ def main(
         else:
             click.echo(json.dumps(record))
 
-    for _ in range(rows):
+    count = 0
+    while rows == 0 or count < rows:
         is_fraud = random.random() < fraud_rate
         transaction = generate_transaction(is_fraud=is_fraud)
         emit(transaction.model_dump())
+        count += 1
+        if count % 1000 == 0:
+            print(f"[info] produced {count} transactions", flush=True)
         if delay:
             time.sleep(delay)
 

@@ -9,6 +9,16 @@ spec:
     repoURL: https://github.com/Yash-Rathod/PaySense2.git
     targetRevision: HEAD
     path: infra/helm/consumer
+    helm:
+      parameters:
+        - name: "image.repository"
+          value: "347486023960.dkr.ecr.us-east-1.amazonaws.com/paysense-consumer"
+        - name: "serviceAccount.irsaRoleArn"
+          value: "arn:aws:iam::347486023960:role/paysense-eks-paysense-role"
+        - name: "env.MODEL_URI"
+          value: "s3://paysense-mlflow-artifacts/m-8a22581637744e798bea2a5e005e6979/artifacts/model/"
+        - name: "env.PYTHONUNBUFFERED"
+          value: "1"
   destination:
     server: https://kubernetes.default.svc
     namespace: paysense
