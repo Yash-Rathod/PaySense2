@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: producer
+  namespace: paysense
+  labels:
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: producer
+  endpoints:
+    - port: metrics
+      interval: 15s
+      path: /metrics
