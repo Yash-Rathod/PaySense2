@@ -331,7 +331,7 @@ git commit -m "feat: Terraform IRSA module (DynamoDB + S3 access for K8s service
 - Create: `infra/terraform/outputs.tf`
 - Create: `infra/terraform/backend.tf`
 
-- [ ] **Step 1: Create `infra/terraform/variables.tf`**
+- [x] **Step 1: Create `infra/terraform/variables.tf`**
 
 ```hcl
 variable "region" {
@@ -355,7 +355,7 @@ variable "mlflow_bucket_name" {
 }
 ```
 
-- [ ] **Step 2: Create `infra/terraform/backend.tf`**
+- [x] **Step 2: Create `infra/terraform/backend.tf`**
 
 ```hcl
 terraform {
@@ -382,7 +382,7 @@ provider "aws" {
 }
 ```
 
-- [ ] **Step 3: Create `infra/terraform/main.tf`**
+- [x] **Step 3: Create `infra/terraform/main.tf`**
 
 ```hcl
 module "vpc" {
@@ -440,7 +440,7 @@ module "irsa" {
 }
 ```
 
-- [ ] **Step 4: Create `infra/terraform/outputs.tf`**
+- [x] **Step 4: Create `infra/terraform/outputs.tf`**
 
 ```hcl
 output "cluster_name" {
@@ -472,7 +472,7 @@ output "irsa_role_arn" {
 }
 ```
 
-- [ ] **Step 5: Validate Terraform config**
+- [x] **Step 5: Validate Terraform config**
 
 ```bash
 cd infra/terraform
@@ -482,7 +482,7 @@ terraform validate
 
 Expected: `Success! The configuration is valid.`
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add infra/terraform/
