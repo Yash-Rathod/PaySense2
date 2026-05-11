@@ -50,4 +50,6 @@ module "irsa" {
   oidc_provider      = module.eks.oidc_provider
   dynamodb_table_arn = aws_dynamodb_table.transactions.arn
   s3_bucket_arn      = aws_s3_bucket.mlflow.arn
+
+  github_oidc_provider_arn = "arn:aws:iam::347486023960:oidc-provider/token.actions.githubusercontent.com"
 }

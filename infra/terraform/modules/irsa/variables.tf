@@ -7,3 +7,13 @@ variable "namespace" {
   type    = string
   default = "paysense"
 }
+
+variable "github_repo" {
+  type    = string
+  default = "Yash-Rathod/PaySense2"
+}
+
+variable "github_oidc_provider_arn" {
+  type    = string
+  default = ""
+}
