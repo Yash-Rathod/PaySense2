@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: paysense-alerts
+  namespace: paysense
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: paysense.fraud
+      interval: 30s
+      rules:
+        - alert: HighFraudRate
+          expr: >
+            rate(fraud_detected_total[2m]) / rate(transactions_consumed_total[2m]) > 0.20
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Fraud rate above 20%"
+            description: "Fraud rate is {{ $value | humanizePercentage }} over the last 2 minutes."
+
+    - name: paysense.kafka
+      interval: 30s
+      rules:
+        - alert: KafkaConsumerLagHigh
+          expr: kafka_consumergroup_lag > 1000
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Kafka consumer lag above 1000"
+            description: "Consumer group lag is {{ $value }} messages on topic {{ $labels.topic }}."
