@@ -1,0 +1,33 @@
+image:
+  repository: "PLACEHOLDER_ECR_URL/paysense-producer"
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+env:
+  KAFKA_BOOTSTRAP_SERVERS: "kafka-cluster-kafka-bootstrap.paysense.svc.cluster.local:9092"
+  KAFKA_TOPIC_TRANSACTIONS: "transactions"
+
+args:
+  - "--rows"
+  - "0"
+  - "--fraud-rate"
+  - "0.1"
+  - "--tps"
+  - "50"
+  - "--mode"
+  - "kafka"
+
+resources:
+  requests:
+    cpu: 128m
+    memory: 128Mi
+  limits:
+    cpu: 256m
+    memory: 256Mi
+
+serviceAccount:
+  irsaRoleArn: ""
+
+metricsPort: 9090
