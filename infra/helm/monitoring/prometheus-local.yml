@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "producer"
+    static_configs:
+      - targets: ["producer:9090"]
+
+  - job_name: "consumer"
+    static_configs:
+      - targets: ["consumer:9091"]
+
+  # kafka_consumergroup_lag metric is only available on EKS via Strimzi JMX exporter.
+  # For local Kafka lag monitoring, add danielqsj/kafka-exporter to docker-compose
+  # and uncomment this block:
+  # - job_name: "kafka-exporter"
+  #   static_configs:
+  #     - targets: ["kafka-exporter:9308"]
