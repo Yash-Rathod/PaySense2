@@ -653,7 +653,7 @@ git commit -m "feat: Helm chart for producer (Deployment, SA with IRSA, Service)
 - Create: `infra/helm/consumer/templates/serviceaccount.yaml`
 - Create: `infra/helm/consumer/templates/service.yaml`
 
-- [ ] **Step 1: Create `infra/helm/consumer/Chart.yaml`**
+- [x] **Step 1: Create `infra/helm/consumer/Chart.yaml`**
 
 ```yaml
 apiVersion: v2
@@ -664,134 +664,53 @@ version: 0.1.0
 appVersion: "0.1.0"
 ```
 
-- [ ] **Step 2: Create `infra/helm/consumer/values.yaml`**
+- [x] **Step 2: Create `infra/helm/consumer/values.yaml`**
 
 ```yaml
 image:
   repository: "PLACEHOLDER_ECR_URL/paysense-consumer"
   tag: "latest"
-  pullPolicy: IfNotPresent
-
-replicaCount: 1
-
-env:
-  KAFKA_BOOTSTRAP_SERVERS: "kafka-cluster-kafka-bootstrap.paysense.svc.cluster.local:9092"
-  KAFKA_TOPIC_TRANSACTIONS: "transactions"
-  KAFKA_TOPIC_RESULTS: "results"
-  KAFKA_GROUP_ID: "paysense-consumer"
-  DYNAMODB_TABLE: "transactions"
-  AWS_DEFAULT_REGION: "us-east-1"
-  # Set to direct S3 path after terraform apply + model upload step (ep09 manual step 3)
-  # Format: s3://paysense-mlflow-artifacts/<run-id>/artifacts/model
-  # Do NOT use models:/ registry alias here — no MLflow tracking server runs on EKS
-  MODEL_URI: "PLACEHOLDER_S3_MODEL_URI"
-  API_PORT: "8001"
-  METRICS_PORT: "9091"
-
-resources:
-  requests:
-    cpu: 256m
-    memory: 256Mi
-  limits:
-    cpu: 512m
-    memory: 512Mi
-
-serviceAccount:
-  irsaRoleArn: ""
-
+...
 apiPort: 8001
 metricsPort: 9091
 ```
 
-- [ ] **Step 3: Create `infra/helm/consumer/templates/serviceaccount.yaml`**
+- [x] **Step 3: Create `infra/helm/consumer/templates/serviceaccount.yaml`**
 
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: consumer
-  namespace: {{ .Release.Namespace }}
-  annotations:
+...
     {{- if .Values.serviceAccount.irsaRoleArn }}
     eks.amazonaws.com/role-arn: {{ .Values.serviceAccount.irsaRoleArn }}
     {{- end }}
 ```
 
-- [ ] **Step 4: Create `infra/helm/consumer/templates/deployment.yaml`**
+- [x] **Step 4: Create `infra/helm/consumer/templates/deployment.yaml`**
 
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: consumer
-  namespace: {{ .Release.Namespace }}
-spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      app: consumer
-  template:
-    metadata:
-      labels:
-        app: consumer
-    spec:
-      serviceAccountName: consumer
-      containers:
-        - name: consumer
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            {{- range $key, $val := .Values.env }}
-            - name: {{ $key }}
-              value: {{ $val | quote }}
-            {{- end }}
-          resources:
-            requests:
-              cpu: {{ .Values.resources.requests.cpu }}
-              memory: {{ .Values.resources.requests.memory }}
-            limits:
-              cpu: {{ .Values.resources.limits.cpu }}
-              memory: {{ .Values.resources.limits.memory }}
-          ports:
-            - containerPort: {{ .Values.apiPort }}
-              name: api
-            - containerPort: {{ .Values.metricsPort }}
-              name: metrics
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: {{ .Values.apiPort }}
-            initialDelaySeconds: 30
-            periodSeconds: 20
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: {{ .Values.apiPort }}
+...
             initialDelaySeconds: 10
             periodSeconds: 5
 ```
 
-- [ ] **Step 5: Create `infra/helm/consumer/templates/service.yaml`**
+- [x] **Step 5: Create `infra/helm/consumer/templates/service.yaml`**
 
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: consumer
-  namespace: {{ .Release.Namespace }}
-spec:
-  selector:
-    app: consumer
-  ports:
-    - name: api
-      port: {{ .Values.apiPort }}
-      targetPort: {{ .Values.apiPort }}
+...
     - name: metrics
       port: {{ .Values.metricsPort }}
       targetPort: {{ .Values.metricsPort }}
 ```
 
-- [ ] **Step 6: Lint Helm chart**
+- [x] **Step 6: Lint Helm chart**
 
 ```bash
 helm lint infra/helm/consumer/
@@ -799,7 +718,7 @@ helm lint infra/helm/consumer/
 
 Expected: `1 chart(s) linted, 0 chart(s) failed`
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add infra/helm/consumer/
