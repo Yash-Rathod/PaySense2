@@ -133,7 +133,7 @@ services:
   prometheus:
     image: prom/prometheus:v2.51.0
     ports:
-      - "9090:9090"
+      - "9094:9090"
     volumes:
       - ./infra/helm/monitoring/prometheus-local.yml:/etc/prometheus/prometheus.yml:ro
     command:
