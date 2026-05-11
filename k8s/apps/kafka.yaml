@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: paysense-kafka
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Yash-Rathod/PaySense2.git
+    targetRevision: HEAD
+    path: infra/helm/strimzi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: paysense
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
