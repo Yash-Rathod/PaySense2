@@ -1,4 +1,16 @@
 import boto3
+from boto3.dynamodb.conditions import Attr
+from decimal import Decimal
+
+
+def _decode(obj):
+    if isinstance(obj, list):
+        return [_decode(v) for v in obj]
+    if isinstance(obj, dict):
+        return {k: _decode(v) for k, v in obj.items()}
+    if isinstance(obj, Decimal):
+        return int(obj) if obj == obj.to_integral_value() else float(obj)
+    return obj
 
 
 class DynamoDBWriter:
@@ -31,19 +43,16 @@ class DynamoDBWriter:
         })
 
     def query_fraud(self, fraud_only: bool = True, limit: int = 100) -> list[dict]:
+        kwargs = {"Limit": limit}
         if fraud_only:
-            resp = self._table.scan(
-                FilterExpression="is_fraud = :val",
-                ExpressionAttributeValues={":val": True},
-                Limit=limit,
-            )
-        else:
-            resp = self._table.scan(Limit=limit)
-        return resp.get("Items", [])
+            kwargs["FilterExpression"] = Attr("is_fraud").eq(True)
+        resp = self._table.scan(**kwargs)
+        return _decode(resp.get("Items", []))
 
     def get_transaction(self, transaction_id: str) -> dict | None:
         resp = self._table.get_item(Key={"transaction_id": transaction_id})
-        return resp.get("Item")
+        item = resp.get("Item")
+        return _decode(item) if item else None
 
     def get_stats(self) -> dict:
         resp = self._table.scan(
