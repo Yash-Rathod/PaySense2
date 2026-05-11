@@ -1,0 +1,24 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: kafka-metrics
+  namespace: paysense
+data:
+  kafka-metrics-config.yml: |
+    lowercaseOutputName: true
+    rules:
+      - pattern: kafka.controller<type=(.+), name=(.+)><>Value
+        name: kafka_controller_$1_$2
+        type: GAUGE
+      - pattern: kafka.server<type=BrokerTopicMetrics, name=(BytesInPerSec|BytesOutPerSec)><>OneMinuteRate
+        name: kafka_server_brokertopicmetrics_$1_rate
+        type: GAUGE
+      - pattern: kafka.server<type=ReplicaManager, name=(.+)><>Value
+        name: kafka_server_replicamanager_$1
+        type: GAUGE
+  zookeeper-metrics-config.yml: |
+    lowercaseOutputName: true
+    rules:
+      - pattern: "org.apache.ZooKeeperService<name0=ReplicatedServer_id(\\d+)><>(\\w+)"
+        name: "zookeeper_$2"
+        type: GAUGE
