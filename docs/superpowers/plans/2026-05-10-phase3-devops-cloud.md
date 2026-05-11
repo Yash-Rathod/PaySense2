@@ -835,7 +835,7 @@ git commit -m "feat: Strimzi KafkaCluster + KafkaTopic CRDs (ep11)"
 - Create: `k8s/apps/consumer.yaml`
 - Create: `k8s/apps/kafka.yaml`
 
-- [ ] **Step 1: Create `k8s/apps/kafka.yaml`**
+- [x] **Step 1: Create `k8s/apps/kafka.yaml`**
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -846,7 +846,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/PLACEHOLDER_GITHUB_USER/PaySense2.git
+    repoURL: https://github.com/Yash-Rathod/PaySense2.git
     targetRevision: HEAD
     path: infra/helm/strimzi
   destination:
@@ -860,7 +860,7 @@ spec:
       - CreateNamespace=true
 ```
 
-- [ ] **Step 2: Create `k8s/apps/producer.yaml`**
+- [x] **Step 2: Create `k8s/apps/producer.yaml`**
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -871,7 +871,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/PLACEHOLDER_GITHUB_USER/PaySense2.git
+    repoURL: https://github.com/Yash-Rathod/PaySense2.git
     targetRevision: HEAD
     path: infra/helm/producer
   destination:
@@ -885,7 +885,7 @@ spec:
       - CreateNamespace=true
 ```
 
-- [ ] **Step 3: Create `k8s/apps/consumer.yaml`**
+- [x] **Step 3: Create `k8s/apps/consumer.yaml`**
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -896,7 +896,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/PLACEHOLDER_GITHUB_USER/PaySense2.git
+    repoURL: https://github.com/Yash-Rathod/PaySense2.git
     targetRevision: HEAD
     path: infra/helm/consumer
   destination:
@@ -910,7 +910,7 @@ spec:
       - CreateNamespace=true
 ```
 
-- [ ] **Step 4: Validate YAML**
+- [x] **Step 4: Validate YAML**
 
 ```bash
 python -c "import yaml; [yaml.safe_load(open(f)) for f in ['k8s/apps/producer.yaml','k8s/apps/consumer.yaml','k8s/apps/kafka.yaml']]"
@@ -918,7 +918,7 @@ python -c "import yaml; [yaml.safe_load(open(f)) for f in ['k8s/apps/producer.ya
 
 Expected: no errors
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add k8s/apps/
