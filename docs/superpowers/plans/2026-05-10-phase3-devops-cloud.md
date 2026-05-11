@@ -500,7 +500,7 @@ git commit -m "feat: Terraform root module — VPC, EKS, ECR, S3, DynamoDB, IRSA
 - Create: `infra/helm/producer/templates/serviceaccount.yaml`
 - Create: `infra/helm/producer/templates/service.yaml`
 
-- [ ] **Step 1: Create `infra/helm/producer/Chart.yaml`**
+- [x] **Step 1: Create `infra/helm/producer/Chart.yaml`**
 
 ```yaml
 apiVersion: v2
@@ -511,7 +511,7 @@ version: 0.1.0
 appVersion: "0.1.0"
 ```
 
-- [ ] **Step 2: Create `infra/helm/producer/values.yaml`**
+- [x] **Step 2: Create `infra/helm/producer/values.yaml`**
 
 ```yaml
 image:
@@ -549,7 +549,7 @@ serviceAccount:
 metricsPort: 9090
 ```
 
-- [ ] **Step 3: Create `infra/helm/producer/templates/serviceaccount.yaml`**
+- [x] **Step 3: Create `infra/helm/producer/templates/serviceaccount.yaml`**
 
 ```yaml
 apiVersion: v1
@@ -563,7 +563,7 @@ metadata:
     {{- end }}
 ```
 
-- [ ] **Step 4: Create `infra/helm/producer/templates/deployment.yaml`**
+- [x] **Step 4: Create `infra/helm/producer/templates/deployment.yaml`**
 
 ```yaml
 apiVersion: apps/v1
@@ -610,7 +610,7 @@ spec:
             periodSeconds: 20
 ```
 
-- [ ] **Step 5: Create `infra/helm/producer/templates/service.yaml`**
+- [x] **Step 5: Create `infra/helm/producer/templates/service.yaml`**
 
 ```yaml
 apiVersion: v1
@@ -627,7 +627,7 @@ spec:
       targetPort: {{ .Values.metricsPort }}
 ```
 
-- [ ] **Step 6: Lint Helm chart**
+- [x] **Step 6: Lint Helm chart**
 
 ```bash
 helm lint infra/helm/producer/
@@ -635,7 +635,7 @@ helm lint infra/helm/producer/
 
 Expected: `1 chart(s) linted, 0 chart(s) failed`
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add infra/helm/producer/
