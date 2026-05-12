@@ -19,7 +19,7 @@ data:
       "links": [],
       "panels": [
         {
-          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+          "datasource": { "type": "prometheus", "uid": null },
           "fieldConfig": {
             "defaults": { "color": { "mode": "palette-classic" }, "unit": "reqps" },
             "overrides": []
@@ -38,7 +38,7 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+          "datasource": { "type": "prometheus", "uid": null },
           "fieldConfig": {
             "defaults": { "color": { "mode": "thresholds" }, "unit": "percentunit",
               "thresholds": { "mode": "absolute", "steps": [
@@ -63,7 +63,7 @@ data:
           "type": "stat"
         },
         {
-          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+          "datasource": { "type": "prometheus", "uid": null },
           "fieldConfig": {
             "defaults": { "unit": "s" },
             "overrides": []
@@ -92,7 +92,7 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+          "datasource": { "type": "prometheus", "uid": null },
           "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
           "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
           "id": 4,
@@ -108,7 +108,7 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+          "datasource": { "type": "prometheus", "uid": null },
           "fieldConfig": { "defaults": { "unit": "short" }, "overrides": [] },
           "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
           "id": 5,
@@ -124,7 +124,7 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+          "datasource": { "type": "prometheus", "uid": null },
           "fieldConfig": { "defaults": { "unit": "percentunit" }, "overrides": [] },
           "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
           "id": 6,
@@ -140,7 +140,7 @@ data:
           "type": "timeseries"
         },
         {
-          "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+          "datasource": { "type": "prometheus", "uid": null },
           "fieldConfig": { "defaults": { "unit": "bytes" }, "overrides": [] },
           "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
           "id": 7,
@@ -159,28 +159,7 @@ data:
       "refresh": "10s",
       "schemaVersion": 39,
       "tags": ["paysense", "fraud-detection"],
-      "templating": {
-        "list": [
-          {
-            "current": {
-              "selected": false,
-              "text": "Prometheus",
-              "value": "prometheus"
-            },
-            "hide": 0,
-            "includeAll": false,
-            "label": "datasource",
-            "multi": false,
-            "name": "DS_PROMETHEUS",
-            "options": [],
-            "query": "prometheus",
-            "refresh": 1,
-            "regex": "",
-            "skipUrl": false,
-            "type": "datasource"
-          }
-        ]
-      },
+      "templating": { "list": [] },
       "time": { "from": "now-30m", "to": "now" },
       "timepicker": {},
       "timezone": "browser",

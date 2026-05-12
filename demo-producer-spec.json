@@ -1,0 +1,41 @@
+{
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+    "name": "demo-producer",
+    "labels": {
+      "app": "producer"
+    }
+  },
+  "spec": {
+    "containers": [
+      {
+        "name": "demo-producer",
+        "image": "347486023960.dkr.ecr.us-east-1.amazonaws.com/paysense-producer:latest",
+        "env": [
+          {
+            "name": "KAFKA_BOOTSTRAP_SERVERS",
+            "value": "kafka-cluster-kafka-bootstrap.paysense.svc.cluster.local:9092"
+          }
+        ],
+        "ports": [
+          {
+            "containerPort": 9090,
+            "name": "metrics"
+          }
+        ],
+        "args": [
+          "--rows",
+          "5000",
+          "--tps",
+          "80",
+          "--fraud-rate",
+          "0.45",
+          "--mode",
+          "kafka"
+        ]
+      }
+    ],
+    "restartPolicy": "Never"
+  }
+}
